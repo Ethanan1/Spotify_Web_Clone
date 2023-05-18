@@ -1,7 +1,24 @@
-# backend
-Flask==2.0.2
-Flask-Cors==3.0.10
+# Backend Dependencies
+Flask==2.1.0
+SQLAlchemy==1.4.22
+Flask-CORS==3.0.10
 Flask-Migrate==3.1.0
 Flask-RESTful==0.3.9
-Flask-SQLAlchemy==3.1.0
-SQLAlchemy==1.4.23
+Flask-Script==2.0.6
+requests==2.26.0
+
+# Frontend Dependencies
+react==17.0.2
+react-dom==17.0.2
+react-scripts==5.0.0
+axios==0.24.0
+
+# Database
+psycopg2==2.9.1
+
+# Authentication
+Flask-Dance==4.1.0
+
+# Development and Testing
+pytest==6.2.5
+pytest-cov==3.0.0
