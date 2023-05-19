@@ -7,8 +7,8 @@ This project is a Spotify web player clone, aiming to replicate some of the core
 - User authentication: Allow users to create accounts, log in, and manage their profiles.
 - Song playback: Enable users to play, pause, skip, and control the volume of songs.
 - Playlist management: Allow users to create, edit, and delete playlists, and add songs to their playlists.
-- Search functionality: Provide users with the ability to search for songs, albums, and artists.
-- User preferences: Allow users to customize their preferences, such as language and theme.
+- Search functionality: Provide users with the ability to search for songs, playlists and artists.
+- Favorites: Allow users to create a dedicated favorites section where they can store and access their preferred songs.
 
 ## Technologies Used
 
