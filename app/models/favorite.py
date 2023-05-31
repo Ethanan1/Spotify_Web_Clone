@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 db = SQLAlchemy()
 
