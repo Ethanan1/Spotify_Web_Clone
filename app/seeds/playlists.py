@@ -44,6 +44,8 @@ def seed_playlists():
 
 # Define the undo method to remove the seeded data
 def undo_playlists():
-    for playlist in Playlist.query.all():
-        db.session.delete(playlist)
-    db.session.commit()
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.playlists RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM playlists"))
+        db.session.commit()

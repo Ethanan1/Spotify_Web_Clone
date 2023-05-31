@@ -1,8 +1,8 @@
 from flask.cli import AppGroup
-from .users import seed_users, undo_users
 from .favorites import seed_favorites, undo_favorites
 from .songs import seed_songs, undo_songs
 from .playlists import seed_playlists, undo_playlists
+from .users import seed_users, undo_users
 from app.models.db import db, environment, SCHEMA
 from app.models import db, User
 

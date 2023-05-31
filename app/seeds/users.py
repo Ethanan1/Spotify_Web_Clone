@@ -44,6 +44,7 @@ seeder_data = [
 ]
 
 def seed_users():
+    users = []
     for data in seeder_data:
         user = User(
             username=data['username'],
@@ -56,6 +57,7 @@ def seed_users():
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
         )
+        users.append(user)
         db.session.add(user)
     db.session.commit()
 
