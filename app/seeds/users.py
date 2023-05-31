@@ -5,28 +5,28 @@ from sqlalchemy.sql import text
 
 seeder_data = [
     {
-        'email': 'john@example.com',
-        'password': 'password1',
+        'email': 'demo@aa.io',
+        'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
         'theme': 'dark',
     },
     {
 
-        'email': 'jane@example.com',
-        'password': 'password2',
+        'email': 'jane@aa.io',
+        'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
         'theme': 'light',
     },
     {
 
-        'email': 'mary@example.com',
-        'password': 'password3',
+        'email': 'mary@aa.io',
+        'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
         'theme': 'dark',
     },
     {
-        'email': 'samuel@example.com',
-        'password': 'password4',
+        'email': 'samuel@aa.io',
+        'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
         'theme': 'light',
     },
