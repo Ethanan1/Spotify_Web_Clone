@@ -40,10 +40,10 @@ def seed_playlists():
         db.session.add(playlist)
     db.session.commit()
 
-    # Define the undo method to remove the seeded data
-    def undo_playlists():
-        for playlist in playlists:
-            db.session.delete(playlist)
-        db.session.commit()
+    return playlists
 
-    return undo_playlists
+# Define the undo method to remove the seeded data
+def undo_playlists():
+    for playlist in Playlist.query.all():
+        db.session.delete(playlist)
+    db.session.commit()

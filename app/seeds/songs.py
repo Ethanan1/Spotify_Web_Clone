@@ -48,10 +48,10 @@ def seed_songs():
         db.session.add(song)
     db.session.commit()
 
-    # Define the undo method to remove the seeded data
-    def undo_songs():
-        for song in songs:
-            db.session.delete(song)
-        db.session.commit()
+    return songs
 
-    return undo_songs
+# Define the undo method to remove the seeded data
+def undo_songs():
+    for song in Song.query.all():
+        db.session.delete(song)
+    db.session.commit()

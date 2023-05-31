@@ -5,6 +5,9 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 db = SQLAlchemy()
 
 class Song(db.Model):
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
+        
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     artist = db.Column(db.String(255), nullable=False)

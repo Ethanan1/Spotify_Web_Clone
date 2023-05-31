@@ -4,6 +4,7 @@ from .favorites import seed_favorites, undo_favorites
 from .songs import seed_songs, undo_songs
 from .playlists import seed_playlists, undo_playlists
 from app.models.db import db, environment, SCHEMA
+from app.models import db, User
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`

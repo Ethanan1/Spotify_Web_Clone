@@ -11,6 +11,9 @@ from app.api.playlists import playlists_bp
 from app.api.songs import songs_bp
 from app.api.users import users_bp
 from app.config import Config
+from app.seeds import seed_commands
+
+
 
 app = Flask(__name__, static_folder="../react-app/build", static_url_path="/")
 
@@ -26,7 +29,7 @@ login.login_view = "auth.unauthorized"
 def load_user(id):
     return User.query.get(int(id))
 
-
+app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(favorites_bp, url_prefix="/api/favorites")
@@ -39,7 +42,7 @@ Migrate(app, db)
 # Application Security
 CORS(app)
 
-csrf = CSRFProtect(app)
+# csrf = CSRFProtect(app)
 
 @app.before_request
 def https_redirect():
@@ -61,6 +64,39 @@ def inject_csrf_token(response):
     return response
 
 # Register your routes and other configurations here
+@app.route("/api/docs")
+def api_help():
+    """
+    Returns all API routes and their doc strings
+    """
+    acceptable_methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    route_list = {
+        rule.rule: [
+            [method for method in rule.methods if method in acceptable_methods],
+            app.view_functions[rule.endpoint].__doc__,
+        ]
+        for rule in app.url_map.iter_rules()
+        if rule.endpoint != "static"
+    }
+    return route_list
+
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def react_root(path):
+    """
+    This route will direct to the public directory in our
+    react builds in the production environment for favicon
+    or index.html requests
+    """
+    if path == "favicon.ico":
+        return app.send_from_directory("public", "favicon.ico")
+    return app.send_static_file("index.html")
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file("index.html")
 
 if __name__ == "__main__":
     app.run()

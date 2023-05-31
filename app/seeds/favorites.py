@@ -36,10 +36,10 @@ def seed_favorites():
         db.session.add(favorite)
     db.session.commit()
 
-    # Define the undo method to remove the seeded data
-    def undo_favorites():
-        for favorite in favorites:
-            db.session.delete(favorite)
-        db.session.commit()
+    return favorites
 
-    return undo_favorites
+# Define the undo method to remove the seeded data
+def undo_favorites():
+    for favorite in Favorite.query.all():
+        db.session.delete(favorite)
+    db.session.commit()
