@@ -1,5 +1,7 @@
 from datetime import datetime
 from app.models import Playlist, db
+from app.models.db import db, environment, SCHEMA
+from sqlalchemy.sql import text
 
 seeder_data = [
     {

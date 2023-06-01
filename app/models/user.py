@@ -7,7 +7,7 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     if environment == "production":
@@ -23,6 +23,18 @@ class User(db.Model):
     theme = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    playlists = db.relationship("Playlist", back_populates="user")
+    # favorites = db.relationship('Favorite', backref='user')
 
-    playlists = db.relationship('Playlist', backref='user')
-    favorites = db.relationship('Favorite', backref='user')
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "cover_photo_url": self.cover_photo_url,
+            "theme": self.theme,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat()
+        }
