@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app import db
 from app.models import User
+from werkzeug.security import generate_password_hash, check_password_hash
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 
@@ -40,12 +41,10 @@ def update_user(user_id):
     email = request.json.get('email')
     password = request.json.get('password')
     cover_photo_url = request.json.get('cover_photo_url')
-    theme = request.json.get('theme')
 
     user.email = email
     user.password = password
     user.cover_photo_url = cover_photo_url
-    user.theme = theme
 
     db.session.commit()
 
@@ -66,3 +65,7 @@ def delete_user(user_id):
     db.session.commit()
 
     return jsonify(message='User deleted successfully'), 200
+
+
+
+    # ...

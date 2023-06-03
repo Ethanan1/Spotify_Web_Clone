@@ -11,7 +11,6 @@ seeder_data = [
         'email': 'demo@aa.io',
         'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
-        'theme': 'dark',
     },
     {
         'username': 'JaneD',
@@ -20,7 +19,6 @@ seeder_data = [
         'email': 'jane@aa.io',
         'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
-        'theme': 'light',
     },
     {
         'username': 'MaryL',
@@ -29,7 +27,6 @@ seeder_data = [
         'email': 'mary@aa.io',
         'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
-        'theme': 'dark',
     },
     {
         'username': 'Sammy',
@@ -38,7 +35,6 @@ seeder_data = [
         'email': 'samuel@aa.io',
         'password': 'password',
         'cover_photo_url': 'https://example.com/cover.jpg',
-        'theme': 'light',
     },
     # Add more user data dictionaries as needed
 ]
@@ -48,12 +44,12 @@ def seed_users():
     for data in seeder_data:
         user = User(
             username=data['username'],
-            first_name=data['first_name'],
-            last_name=data['last_name'],
+            # first_name=data['first_name'],
+            # last_name=data['last_name'],
             email=data['email'],
             password=data['password'],
             cover_photo_url=data['cover_photo_url'],
-            theme=data['theme'],
+            # theme=data['theme'],
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
         )

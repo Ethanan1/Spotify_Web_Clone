@@ -27,6 +27,20 @@ def create_song():
 
     return jsonify(message='Song created successfully'), 201
 
+@songs_bp.route('/<int:song_id>', methods=['GET'])
+@login_required
+def get_song(song_id):
+    # Get the song with the specified ID from the database
+    song = Song.query.get(song_id)
+    if not song:
+        return jsonify(message='Song not found'), 404
+
+    # Convert the song to a dictionary
+    song_data = song.to_dict()
+
+    return jsonify(song=song_data), 200
+
+
 @songs_bp.route('/<int:song_id>', methods=['PUT'])
 @login_required
 def update_song(song_id):

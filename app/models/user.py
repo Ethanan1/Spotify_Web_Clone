@@ -5,8 +5,6 @@ from sqlalchemy.sql import func
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
-db = SQLAlchemy()
-
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -15,26 +13,30 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), nullable=False, unique=True)
-    first_name = db.Column(db.String(255), nullable=False)
-    last_name = db.Column(db.String(255), nullable=False)
+    # first_name = db.Column(db.String(255), nullable=False)
+    # last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(255), nullable=False)
+    hashed_password = db.Column(db.String(255), nullable=False)
     cover_photo_url = db.Column(db.String(255), nullable=True, default="https://res.cloudinary.com/dtzv3fsas/image/upload/v1684125923/SpotifyClone/black-outline-avatar-silhouette-default-260nw-610982348_ifydtq.jpg")
-    theme = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     playlists = db.relationship("Playlist", back_populates="user")
-    # favorites = db.relationship('Favorite', backref='user')
+
+    @property
+    def password(self):
+        return self.hashed_password
+
+    @password.setter
+    def password(self, password):
+        self.hashed_password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "username": self.username,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            "cover_photo_url": self.cover_photo_url,
-            "theme": self.theme,
-            "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat()
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'cover_photo_url': self.cover_photo_url,
         }

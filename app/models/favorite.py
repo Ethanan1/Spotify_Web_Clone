@@ -2,6 +2,7 @@
 # from .db import db, environment, SCHEMA, add_prefix_for_prod
 # from .song import Song
 # from .user import User
+# from sqlalchemy.sql import func
 
 # class Favorite(db.Model):
 #     __tablename__ = 'favorites'
@@ -12,8 +13,8 @@
 #     id = db.Column(db.Integer, primary_key=True)
 #     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 #     song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False)
-#     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-#     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    # created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    # updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
 #     user = db.relationship('User', backref='favorites')
 #     song = db.relationship('Song', backref='favorites')

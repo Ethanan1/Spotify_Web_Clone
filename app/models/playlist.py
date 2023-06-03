@@ -1,5 +1,6 @@
 from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from sqlalchemy.sql import func
 
 class Playlist(db.Model):
     __tablename__ = 'playlists'
@@ -11,11 +12,10 @@ class Playlist(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     cover_photo_url = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
-    # user = db.relationship('User', backref='playlists', foreign_keys=[user_id])
-    # songs = db.relationship('Song', secondary='playlist_songs', backref='playlists')
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    user = db.relationship("User", back_populates="playlists")
+    songs = db.relationship('Song', secondary='playlist_songs', back_populates='playlists')
 
     def to_dict(self):
         return {
@@ -25,6 +25,4 @@ class Playlist(db.Model):
             "cover_photo_url": self.cover_photo_url,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
-            # "user": self.user.to_dict(),
-            # Add other attributes or relationships as needed
         }

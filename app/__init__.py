@@ -8,11 +8,11 @@ from app.models import db, User
 from app.api.auth import auth_routes
 # from app.api.favorites import favorites_bp
 from app.api.playlists import playlists_bp
-# from app.api.songs import songs_bp
+from app.api.songs import songs_bp
 from app.api.users import users_bp
 from app.config import Config
 from app.seeds import seed_commands
-
+from .config import Config
 
 
 app = Flask(__name__, static_folder="../react-app/build", static_url_path="/")
@@ -34,7 +34,7 @@ app.config.from_object(Config)
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 # app.register_blueprint(favorites_bp, url_prefix="/api/favorites")
 app.register_blueprint(playlists_bp, url_prefix="/api/playlists")
-# app.register_blueprint(songs_bp, url_prefix="/api/songs")
+app.register_blueprint(songs_bp, url_prefix="/api/songs")
 app.register_blueprint(users_bp, url_prefix="/api/users")
 db.init_app(app)
 Migrate(app, db)
