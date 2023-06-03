@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginForm from './components/HomePage/LoginForm';
 import SignupForm from './components/HomePage/SignupForm';
 import Home from './pages/Home';
@@ -30,16 +30,6 @@ function App() {
               <Home />
             </Route>
           </Switch>
-        </div>
-        <div className="navigation">
-          <ul>
-            <li>
-              <Link to="/">Login/Signup</Link>
-            </li>
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-          </ul>
         </div>
       </div>
     </Router>
