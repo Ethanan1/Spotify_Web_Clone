@@ -1,5 +1,5 @@
 from flask.cli import AppGroup
-# from .favorites import seed_favorites, undo_favorites
+from .favorites import seed_favorites, undo_favorites
 from .songs import seed_songs, undo_songs
 from .playlists import seed_playlists, undo_playlists
 from .users import seed_users, undo_users
@@ -20,11 +20,11 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_songs()
-        # undo_favorites()
+        undo_favorites()
         undo_users()
         undo_playlists()
     seed_users()
-    # seed_favorites()
+    seed_favorites()
     seed_songs()
     seed_playlists()
 
@@ -33,6 +33,6 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_songs()
-    # undo_favorites()
+    undo_favorites()
     undo_users()
     undo_playlists()

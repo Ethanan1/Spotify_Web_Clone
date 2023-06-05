@@ -24,6 +24,20 @@ def add_favorite():
     db.session.commit()
     return jsonify(message='Song added to favorites'), 201
 
+@favorites_bp.route('/<int:favorite_id>', methods=['PUT'])
+@login_required
+def update_favorite(favorite_id):
+    favorite = Favorite.query.get(favorite_id)
+    if not favorite:
+        return jsonify(message='Favorite not found'), 404
+    if favorite.user_id != current_user.id:
+        return jsonify(message='You do not have permission to update this favorite'), 403
+
+    song_id = request.json.get('song_id')
+    favorite.song_id = song_id
+    db.session.commit()
+    return jsonify(message='Favorite updated successfully'), 200
+
 @favorites_bp.route('/<int:favorite_id>', methods=['DELETE'])
 @login_required
 def remove_favorite(favorite_id):
