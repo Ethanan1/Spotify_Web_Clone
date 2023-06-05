@@ -13,7 +13,10 @@ from app.api.users import users_bp
 from app.config import Config
 from app.seeds import seed_commands
 from .config import Config
+import eventlet
 
+
+eventlet.monkey_patch()
 
 app = Flask(__name__, static_folder="../react-app/build", static_url_path="/")
 
