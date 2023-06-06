@@ -10,7 +10,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/auth/signup', {
+      const response = await axios.post('/api/auth/signup', {
         username,
         email,
         password,
