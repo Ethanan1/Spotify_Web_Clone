@@ -1,58 +1,52 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+import { AuthProvider, AuthContext, useAuth } from '../contexts/AuthContext';
+import './SignupPage.css';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signup } = useContext(AuthContext);
 
-  const handleSignup = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('/api/auth/signup', {
-        username,
-        email,
-        password,
-      });
-
-      // Handle successful signup
-      console.log(response.data);
-    } catch (error) {
-      // Handle signup error
-      console.error(error);
-    }
+    // Call the signup function from the AuthContext to perform signup
+    await signup({ username, email, password });
+    // Reset the form fields after signup
+    setUsername('');
+    setEmail('');
+    setPassword('');
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignup}>
-        <div>
-          <label>Username:</label>
+    <div className="form-box">
+      <h2>Sign up</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Username</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className="form-group">
+          <label>Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="form-group">
+          <label>Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Sign up</button>
       </form>
     </div>
   );

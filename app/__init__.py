@@ -6,7 +6,7 @@ from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
 from app.models import db, User
 from app.api.auth import auth_routes
-# from app.api.favorites import favorites_bp
+from app.api.favorites import favorites_bp
 from app.api.playlists import playlists_bp
 from app.api.songs import songs_bp
 from app.api.users import users_bp
@@ -35,7 +35,7 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
-# app.register_blueprint(favorites_bp, url_prefix="/api/favorites")
+app.register_blueprint(favorites_bp, url_prefix="/api/favorites")
 app.register_blueprint(playlists_bp, url_prefix="/api/playlists")
 app.register_blueprint(songs_bp, url_prefix="/api/songs")
 app.register_blueprint(users_bp, url_prefix="/api/users")

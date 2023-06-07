@@ -1,42 +1,37 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+import { AuthProvider, AuthContext, useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useContext(AuthContext);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('/api/auth/login', {
-        email,
-        password,
-      });
-
-      // Handle successful login
-      console.log(response.data);
-    } catch (error) {
-      // Handle login error
-      console.error(error);
-    }
+    // Call the login function from the AuthContext to perform login
+    await login({ email, password });
+    // Reset the form fields after login
+    setEmail('');
+    setPassword('');
   };
 
   return (
-    <div>
+    <div className="form-box">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

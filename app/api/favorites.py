@@ -35,3 +35,15 @@ def remove_favorite(favorite_id):
     db.session.delete(favorite)
     db.session.commit()
     return jsonify(message='Favorite removed successfully'), 200
+
+@favorites_bp.route('/', methods=['POST'])
+@login_required
+def add_favorite():
+    song_id = request.json.get('song_id')
+    favorite = Favorite.query.filter_by(user_id=current_user.id, song_id=song_id).first()
+    if favorite:
+        return jsonify(message='Song is already in favorites'), 400
+    favorite = Favorite(user_id=current_user.id, song_id=song_id)
+    db.session.add(favorite)
+    db.session.commit()
+    return jsonify(favorite.to_dict()), 201
